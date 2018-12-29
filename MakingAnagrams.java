@@ -10,23 +10,20 @@ public class Solution {
 
     // Complete the makeAnagram function below.
     static int makeAnagram(String a, String b) {
-        int counter = 0;
-        char[] x = a.toCharArray();
-        char[] y = b.toCharArray();
-        for(int i = 0; i < x.length; i++){
-            int index = -1;
-            for(int j = 0; j < y.length; j++){
-                if(y[j] == x[i]){
-                    index = j;
-                    break;
-                }
-            }
-            if( index >= 0){
-                counter++;
-                y[index] = '#';
-            }
+        int[] frequency = new int[26];
+        
+        for(int i = 0; i < a.length(); i++){
+            frequency[a.charAt(i) - 'a']++;
         }
-        return (a.length()+b.length())-(2*counter);
+        for(int j = 0; j < b.length(); j++){
+            frequency[b.charAt(j) - 'a']--;
+        }
+        int counter = 0;
+        for(int i = 0; i < frequency.length; i++){
+            counter+= Math.abs(frequency[i]);
+        }
+
+        return counter;
     }
 
     private static final Scanner scanner = new Scanner(System.in);
